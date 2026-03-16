@@ -1,0 +1,24 @@
+{
+  "name": "qa-enginner",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000Q\u0000a\u0000-\u0000E\u0000n\u0000g\u0000i\u0000n\u0000n\u0000e\u0000r\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luizin16/Qa-Enginner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Luizin16/Qa-Enginner/issues"
+  },
+  "homepage": "https://github.com/Luizin16/Qa-Enginner#readme",
+  "devDependencies": {
+    "cypress": "^15.12.0"
+  }
+}
