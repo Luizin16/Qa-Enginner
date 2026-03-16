@@ -1,10 +1,16 @@
 {
   "name": "qa-enginner",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000Q\u0000a\u0000-\u0000E\u0000n\u0000g\u0000i\u0000n\u0000n\u0000e\u0000r\u0000\r\u0000 \u0000",
+  "description": "Projeto de automação de testes web com Cypress, Page Object, API tests, Mochawesome e GitHub Actions.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "cypress run --spec 'cypress/e2e/*.cy.js'",
+    "test:api": "cypress run --spec 'cypress/e2e/api.cy.js'",
+    "report:clean": "npx rimraf mochawesome-report cypress/reports",
+    "report:run": "cypress run --reporter mochawesome",
+    "report:open": "start mochawesome-report/mochawesome.html"
   },
   "repository": {
     "type": "git",
