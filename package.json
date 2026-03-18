@@ -6,11 +6,10 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:e2e": "cypress run --spec 'cypress/e2e/*.cy.js'",
-    "test:api": "cypress run --spec 'cypress/e2e/api.cy.js'",
-    "report:clean": "npx rimraf mochawesome-report cypress/reports",
-    "report:run": "cypress run --reporter mochawesome",
-    "report:open": "start mochawesome-report/mochawesome.html"
+    "test:home": "cypress run --spec cypress/e2e/home.cy.js",
+    "test:search": "cypress run --spec cypress/e2e/search.cy.js",
+    "test:login": "cypress run --spec cypress/e2e/login.cy.js",
+    "test:api": "cypress run --spec cypress/e2e/api.cy.js"
   },
   "repository": {
     "type": "git",

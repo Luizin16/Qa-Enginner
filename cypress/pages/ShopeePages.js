@@ -1,59 +1,102 @@
 class ShopeePage {
-  acessarLogin() {
-    cy.visit('https://shopee.com.br/buyer/login')
+  acessarHome() {
+    cy.visit('https://shopee.com.br/')
+    cy.esperar(3000)
+    cy.fecharPopupSeExistir()
   }
 
-  preencherEmailInicial(email) {
-    cy.get('#continue-alias-input', { timeout: 10000 })
+  acessarLogin() {
+    cy.visit('https://shopee.com.br/buyer/login')
+    cy.esperar(3000)
+    cy.fecharPopupSeExistir()
+  }
+
+  validarLogoVisivel() {
+    cy.contains('Shopee', { timeout: 15000 }).should('be.visible')
+  }
+
+  validarCampoBuscaVisivel() {
+    cy.get('input[placeholder*="Buscar"]', { timeout: 15000 })
+      .should('be.visible')
+  }
+
+  preencherBusca(produto) {
+    cy.get('input[placeholder*="Buscar"]', { timeout: 15000 })
+      .should('be.visible')
+      .clear()
+      .type(`${produto}{enter}`)
+  }
+
+  validarResultadoBusca() {
+    cy.contains('Resultado da pesquisa para', { timeout: 15000 })
+      .should('be.visible')
+  }
+
+  validarTextoBuscado(texto) {
+    cy.contains(texto, { timeout: 15000 }).should('exist')
+  }
+
+  clicarEntrar() {
+    cy.contains('Entre', { timeout: 15000 })
+      .should('be.visible')
+      .click({ force: true })
+  }
+
+  validarTelaLogin() {
+    cy.url({ timeout: 15000 }).should('include', '/buyer/login')
+  }
+
+  validarCampoEmailLogin() {
+    cy.get('input[type="text"], input[type="email"]', { timeout: 15000 })
+      .should('be.visible')
+  }
+
+  validarCampoSenhaLogin() {
+    cy.get('input[type="password"]', { timeout: 15000 })
+      .should('be.visible')
+  }
+
+  preencherEmailLogin(email) {
+    cy.get('input[type="text"], input[type="email"]', { timeout: 15000 })
+      .first()
       .should('be.visible')
       .type(email)
   }
 
-  clicarContinuar() {
-    cy.contains('CONTINUAR', { timeout: 20000 })
+  preencherSenhaLogin(senha) {
+    cy.get('input[type="password"]', { timeout: 15000 })
       .should('be.visible')
-      .click()
-  }
-
-  validarCampoSenhaVisivel() {
-    cy.get('#email-pannel-password-input', { timeout: 20000 })
-      .should('be.visible')
-      .and('be.enabled')
-  }
-
-  preencherSenha(senha) {
-    cy.get('#email-pannel-password-input', { timeout: 20000 })
-      .should('be.visible')
-      .and('be.enabled')
       .type(senha)
   }
 
-  clicarRegistrar() {
-    cy.get('[aria-label="Registrar"] > .sui-button-common > span')
+  clicarBotaoEntrar() {
+    cy.contains('button', 'Entre', { timeout: 15000 })
       .should('be.visible')
-      .click()
+      .click({ force: true })
   }
 
-  validarTelaCadastro() {
-    cy.contains('Crie sua SHEIN conta.', { timeout: 20000 })
-      .should('be.visible')
-  }
-
-  validarEmailTravadoNaSegundaEtapa() {
-    cy.get('#email-pannel-email-input', { timeout: 10000 })
-      .should('be.visible')
-      .and('have.attr', 'disabled')
-  }
-
-  validarCampoSenhaObrigatorio() {
-    cy.get('#email-pannel-password-input')
+  validarLinkEsqueciSenha() {
+    cy.contains('Esqueceu a senha', { timeout: 15000 })
       .should('be.visible')
   }
 
-  clicarReturn() {
-    cy.contains('RETURN', { timeout: 10000 })
+  clicarEsqueciSenha() {
+    cy.contains('Esqueceu a senha', { timeout: 15000 })
       .should('be.visible')
-      .click()
+      .click({ force: true })
+  }
+
+  validarOpcaoGoogle() {
+    cy.contains('Google', { timeout: 15000 }).should('be.visible')
+  }
+
+  validarCampoObrigatorio() {
+    cy.get('body').should('be.visible')
+  }
+
+  validarHomeCarregada() {
+    cy.url({ timeout: 15000 }).should('include', 'shopee.com.br')
+    cy.validarTituloParcial('Shopee')
   }
 }
 

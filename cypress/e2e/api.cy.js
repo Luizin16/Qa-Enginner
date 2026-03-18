@@ -1,41 +1,29 @@
-describe('Testes de API', () => {
-  it('deve consultar a API pública de usuários com sucesso', () => {
-    cy.request({
-      method: 'GET',
-      url: 'https://jsonplaceholder.typicode.com/users'
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-      expect(response.body).to.be.an('array')
-      expect(response.body.length).to.be.greaterThan(0)
-      expect(response.body[0]).to.have.property('name')
-      expect(response.body[0]).to.have.property('email')
+describe('Intercept e validação de busca na Shopee', () => {
+  it('deve interceptar a navegação de busca', () => {
+    cy.visit('https://shopee.com.br/')
+    cy.esperar(3000)
+    cy.fecharPopupSeExistir()
+
+    cy.intercept('GET', '**/search*').as('buscaProduto')
+
+    cy.get('input[placeholder*="Buscar"]', { timeout: 15000 })
+      .should('be.visible')
+      .type('óculos{enter}')
+
+    cy.wait('@buscaProduto', { timeout: 20000 }).then((interception) => {
+      expect(interception.request.url).to.include('search')
     })
   })
 
-  it('deve consultar um usuário específico', () => {
-    cy.request({
-      method: 'GET',
-      url: 'https://jsonplaceholder.typicode.com/users/1'
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-      expect(response.body).to.have.property('id', 1)
-      expect(response.body).to.have.property('username')
-    })
-  })
+  it('deve validar carregamento da página após busca', () => {
+    cy.visit('https://shopee.com.br/')
+    cy.esperar(3000)
+    cy.fecharPopupSeExistir()
 
-  it('deve criar um post com sucesso', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://jsonplaceholder.typicode.com/posts',
-      body: {
-        title: 'Projeto QA',
-        body: 'Teste automatizado de API com Cypress',
-        userId: 1
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(201)
-      expect(response.body).to.have.property('title', 'Projeto QA')
-      expect(response.body).to.have.property('userId', 1)
-    })
+    cy.get('input[placeholder*="Buscar"]', { timeout: 15000 })
+      .should('be.visible')
+      .type('óculos{enter}')
+
+    cy.url({ timeout: 15000 }).should('include', '/search')
   })
 })

@@ -28,3 +28,50 @@ describe('Fluxo de cadastro SHOPEE', () => {
 
   })
 })
+
+import ShopeePage from '../pages/ShopeePage'
+
+describe('Login Shopee', () => {
+  beforeEach(() => {
+    ShopeePage.acessarLogin()
+  })
+
+  it('deve carregar a tela de login', () => {
+    ShopeePage.validarTelaLogin()
+    ShopeePage.validarCampoEmailLogin()
+    ShopeePage.validarCampoSenhaLogin()
+  })
+
+  it('deve exibir link de esqueci minha senha', () => {
+    ShopeePage.validarLinkEsqueciSenha()
+  })
+
+  it('deve exibir opção de login com Google', () => {
+    ShopeePage.validarOpcaoGoogle()
+  })
+
+  it('deve permitir preencher email e senha', () => {
+    cy.fixture('user').then((user) => {
+      ShopeePage.preencherEmailLogin(user.email)
+      ShopeePage.preencherSenhaLogin(user.senha)
+    })
+  })
+
+  it('deve tentar login com dados fictícios', () => {
+    cy.fixture('user').then((user) => {
+      ShopeePage.preencherEmailLogin(user.email)
+      ShopeePage.preencherSenhaLogin(user.senha)
+      cy.esperar(1500)
+      ShopeePage.clicarBotaoEntrar()
+
+      /*
+        Resultado esperado:
+        Como o teste utiliza credenciais fictícias,
+        o sistema pode retornar mensagem de erro,
+        impedir autenticação ou solicitar verificação adicional.
+        O objetivo aqui é validar o comportamento da tela
+        e a estabilidade do fluxo.
+      */
+    })
+  })
+})
