@@ -1,29 +1,28 @@
-import ShopeePage from '../pages/ShopeePage'
+describe('Fluxo de cadastro SHOPEE', () => {
 
-describe('Busca de produtos na Shopee', () => {
-  beforeEach(() => {
-    ShopeePage.acessarHome()
+  it('Deve pesquisar por um produto válido', () => {
+    cy.visit('https://shopee.com.br')
+
+    // Acessa o campo de pesquisa
+    cy.get('input[placeholder="Pesquisar produtos"]').type('roupa')
+
+    // Clica no botão de pesquisa
+    cy.get('button[type="submit"]').click()
+
+    // Verifica se os resultados apareceram
+    cy.get('.product-list').should('be.visible')
   })
 
-  it('deve buscar por produto com sucesso', () => {
-    cy.fixture('search').then((dados) => {
-      ShopeePage.preencherBusca(dados.produtoValido)
-      ShopeePage.validarResultadoBusca()
-    })
-  })
+  it('Deve retornar erro ao pesquisar um produto inválido', () => {
+    cy.visit('https://shopee.com.br')
 
-  it('deve validar que a busca foi executada para o termo informado', () => {
-    cy.fixture('search').then((dados) => {
-      ShopeePage.preencherBusca(dados.produtoValido)
-      ShopeePage.validarResultadoBusca()
-      ShopeePage.validarTextoBuscado('Óculos')
-    })
-  })
+    // Acessa o campo de pesquisa
+    cy.get('input[placeholder="Pesquisar produtos"]').type('roopa')
 
-  it('deve realizar busca com termo inexistente sem quebrar a aplicação', () => {
-    cy.fixture('search').then((dados) => {
-      ShopeePage.preencherBusca(dados.produtoInvalido)
-      cy.url({ timeout: 15000 }).should('include', '/search')
-    })
+    // Clica no botão de pesquisa
+    cy.get('button[type="submit"]').click()
+
+    // Verifica se nenhum produto foi encontrado
+    cy.get('.empty-search-result').should('be.visible')
   })
 })

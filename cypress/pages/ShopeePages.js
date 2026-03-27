@@ -1,14 +1,12 @@
 class ShopeePage {
   acessarHome() {
     cy.visit('https://shopee.com.br/')
-    cy.esperar(3000)
-    cy.fecharPopupSeExistir()
+    cy.timeout(3000)
   }
 
   acessarLogin() {
     cy.visit('https://shopee.com.br/buyer/login')
-    cy.esperar(3000)
-    cy.fecharPopupSeExistir()
+    cy.timeout(3000)
   }
 
   validarLogoVisivel() {

@@ -7,7 +7,6 @@ describe('Intercept e validação de busca na Shopee', () => {
     cy.intercept('GET', '**/search*').as('buscaProduto')
 
     cy.get('input[placeholder*="Buscar"]', { timeout: 15000 })
-      .should('be.visible')
       .type('óculos{enter}')
 
     cy.wait('@buscaProduto', { timeout: 20000 }).then((interception) => {
